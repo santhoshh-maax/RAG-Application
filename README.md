@@ -1,12 +1,12 @@
-# 📚 RAG Application using MongoDB Atlas + Ollama
+# RAG Application using MongoDB Atlas + Ollama
 
-A Retrieval-Augmented Generation (RAG) application that allows users to chat with PDF documents using **MongoDB Atlas Vector Search**, **Ollama**, **Gemma 3**, and **LangChain**.
+A Retrieval-Augmented Generation (RAG) application that allows users to chat with PDF documents using **MongoDB Atlas Vector Search**, **Ollama**, **Gemma 3**, and **LangChain** — now with a **web-based chatbot interface**.
 
-The application converts PDF documents into vector embeddings, stores them in MongoDB Atlas, retrieves the most relevant document chunks using Vector Search, and generates accurate answers using a locally running LLM.
+The application converts PDF documents into vector embeddings, stores them in MongoDB Atlas, retrieves the most relevant document chunks using Vector Search, and generates accurate answers using a locally running LLM. The web frontend provides a modern chat interface with streaming responses.
 
 ---
 
-# 🚀 Features
+# Features
 
 - 📄 Load PDF documents
 - ✂️ Split documents into chunks
@@ -14,42 +14,47 @@ The application converts PDF documents into vector embeddings, stores them in Mo
 - 💾 Store embeddings in MongoDB Atlas
 - 🔍 Perform semantic search with MongoDB Vector Search
 - 🤖 Generate answers using Gemma 3
-- 💬 Interactive terminal chatbot
+- 💬 **Web-based chatbot UI** with streaming responses
+- 🌐 **FastAPI backend** with REST API
 - 🆓 Completely free (No OpenAI API required)
 
 ---
 
-# 🏗️ Tech Stack
+# Tech Stack
 
 - Python 3.11
 - LangChain
-- MongoDB Atlas
-- MongoDB Vector Search
-- Ollama
-- Gemma 3:4b
-- nomic-embed-text
+- MongoDB Atlas + Vector Search
+- Ollama (Gemma 3:4b + nomic-embed-text)
+- FastAPI + Uvicorn
+- HTML / CSS / JavaScript (vanilla)
 - PyPDF
 
 ---
 
-# 📂 Project Structure
+# Project Structure
 
 ```
 RAG Application/
 │
+├── app.py                  # FastAPI web server (API + frontend)
+├── rag.py                  # Original CLI chatbot
+├── load_data.py            # PDF ingestion script
+├── key_param.py            # MongoDB connection string
+├── requirements.txt        # Python dependencies
+│
+├── static/
+│     └── index.html        # Chatbot frontend UI
+│
 ├── sample_files/
 │     └── singpore_pr_details.pdf
 │
-├── load_data.py
-├── rag.py
-├── key_param.py
-├── requirements.txt
 └── README.md
 ```
 
 ---
 
-# ⚙️ Prerequisites
+# Prerequisites
 
 - Python 3.11+
 - MongoDB Atlas Account
@@ -115,20 +120,7 @@ nomic-embed-text
 # Step 4 - Install Python Packages
 
 ```bash
-pip install langchain
-pip install langchain-community
-pip install langchain-core
-pip install langchain-text-splitters
-pip install langchain-ollama
-pip install langchain-mongodb
-pip install pymongo
-pip install pypdf
-```
-
-or
-
-```bash
-pip install langchain langchain-community langchain-core langchain-text-splitters langchain-ollama langchain-mongodb pymongo pypdf
+pip install langchain langchain-community langchain-core langchain-text-splitters langchain-ollama langchain-mongodb pymongo pypdf fastapi uvicorn pydantic
 ```
 
 ---
@@ -273,7 +265,34 @@ READY
 
 ---
 
-# Step 10 - Run the RAG Application
+# Step 10 - Run the Web Application
+
+Make sure Ollama is running in the background, then start the server:
+
+```bash
+python -m uvicorn app:app --host 0.0.0.0 --port 8000
+```
+
+Open your browser and go to
+
+```
+http://localhost:8000
+```
+
+You will see a chatbot interface. Type your questions and get instant, streamed answers.
+
+### API Endpoints
+
+| Method | Endpoint       | Description                |
+|--------|---------------|----------------------------|
+| GET    | `/`           | Chatbot frontend UI        |
+| POST   | `/chat`       | Send message (SSE stream)  |
+| GET    | `/history`    | Get chat history           |
+| DELETE | `/history`    | Clear chat history         |
+
+---
+
+# Step 11 - (Alternative) Run the CLI Version
 
 ```bash
 python rag.py
@@ -286,33 +305,10 @@ Example
  Singapore PR RAG Assistant
 ==============================
 
-You:
-```
+You: Who is eligible for Singapore PR?
+Assistant: A foreigner granted permanent residence status, allowing indefinite stay in Singapore.
 
-Ask
-
-```
-Who is eligible for Singapore PR?
-```
-
-Output
-
-```
-Assistant:
-
-A foreigner granted permanent residence status, allowing indefinite stay in Singapore.
-```
-
-Exit
-
-```
-exit
-```
-
-or
-
-```
-quit
+You: exit
 ```
 
 ---
@@ -368,15 +364,10 @@ quit
 ollama --version
 ```
 
-## Download Gemma
+## Download Models
 
 ```bash
 ollama pull gemma3:4b
-```
-
-## Download Embedding Model
-
-```bash
 ollama pull nomic-embed-text
 ```
 
@@ -392,7 +383,15 @@ ollama list
 python load_data.py
 ```
 
-## Run Chatbot
+## Run Web Chatbot
+
+```bash
+python -m uvicorn app:app --host 0.0.0.0 --port 8000
+```
+
+Then open **http://localhost:8000** in your browser.
+
+## Run CLI Chatbot
 
 ```bash
 python rag.py
@@ -402,11 +401,10 @@ python rag.py
 
 # Future Improvements
 
-- Streamlit Web Interface
 - Multi-PDF Support
-- PDF Upload Feature
-- Chat History Storage
-- Source Citation
+- PDF Upload via Web UI
+- Chat History Persistence
+- Source Citation in Responses
 - User Authentication
 - Multiple Collections
 - Hybrid Search
