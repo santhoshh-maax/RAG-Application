@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from langchain_mongodb import MongoDBAtlasVectorSearch
@@ -11,6 +12,10 @@ from langchain_core.messages import HumanMessage, AIMessage
 import key_param
 
 app = FastAPI(title="RAG Chatbot")
+
+static_path = Path(__file__).parent / "static"
+if static_path.exists():
+    app.mount("/static", StaticFiles(directory=str(static_path)), name="static")
 
 DB_NAME = "singapore_pr_chunks"
 COLLECTION_NAME = "chunked_data"
