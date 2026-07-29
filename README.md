@@ -1,9 +1,8 @@
-# RAG Application using MongoDB Atlas + Ollama
+# RAG Chatbot using MongoDB Atlas, Ollama, LangChain, and FastAPI
 
-A Retrieval-Augmented Generation (RAG) application that allows users to chat with PDF documents using **MongoDB Atlas Vector Search**, **Ollama**, **Gemma 3**, and **LangChain** — now with a **web-based chatbot interface**.
+A Retrieval-Augmented Generation (RAG) chatbot built using **MongoDB Atlas Vector Search**, **Ollama**, **Gemma 3**, **LangChain**, and **FastAPI**. The application retrieves relevant information from a vector database and generates context-aware responses using a locally hosted Large Language Model (LLM).
 
-The application converts PDF documents into vector embeddings, stores them in MongoDB Atlas, retrieves the most relevant document chunks using Vector Search, and generates accurate answers using a locally running LLM. The web frontend provides a modern chat interface with streaming responses.
-
+The backend performs semantic search with MongoDB Atlas Vector Search and LangChain, while the frontend provides a modern web-based chat interface with real-time streaming responses.
 ---
 
 # Features
