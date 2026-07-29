@@ -270,7 +270,11 @@ READY
 Make sure Ollama is running in the background, then start the server:
 
 ```bash
+<<<<<<< HEAD
 python -m uvicorn app:app --host 0.0.0.0 --port 8000
+=======
+python -m uvicorn app:app --port 8000
+>>>>>>> ad3548eee4b79ce6b10f6b637c425c5a969589ca
 ```
 
 Open your browser and go to
