@@ -19,6 +19,32 @@ The backend performs semantic search with MongoDB Atlas Vector Search and LangCh
 
 ---
 
+# Running Modes
+
+This project supports two ways of running the application.
+
+## Option 1 — Local Installation
+
+- Install Python
+- Install Ollama
+- Pull the required models manually
+- Run FastAPI locally
+
+Recommended for development.
+
+---
+
+## Option 2 — Docker (Recommended)
+
+- No need to install Ollama on your computer.
+- Docker automatically downloads and configures Ollama.
+- Required models (`gemma3:4b` and `nomic-embed-text`) are downloaded automatically on first run.
+- Everything runs inside Docker containers.
+
+Recommended for first-time users and deployment.
+
+---
+
 # Tech Stack
 
 - Python 3.11
@@ -39,8 +65,18 @@ RAG Application/
 ├── app.py                  # FastAPI web server (API + frontend)
 ├── rag.py                  # Original CLI chatbot
 ├── load_data.py            # PDF ingestion script
+├── Dockerfile
+├── docker-compose.yml
+├── .dockerignore
 ├── .env                    # MongoDB connection string
 ├── requirements.txt        # Python dependencies
+│
+├── docker/
+│   └── ollama-init/
+│       └── Dockerfile
+│
+├── scripts/
+│   └── init-ollama.sh
 │
 ├── static/
 │     └── index.html        # Chatbot frontend UI
@@ -53,7 +89,16 @@ RAG Application/
 
 ---
 
-# Prerequisites
+# Choose Your Setup
+
+| Setup | Ollama Installation | Python Installation | Recommended |
+|---------|--------------------|---------------------|-------------|
+| Local | ✅ Required          | ✅ Required        | For Development |
+| Docker | ❌ Not Required     | ❌ Not Required    | ⭐ Recommended |
+
+---
+
+# Local Installation
 
 - Python 3.11+
 - MongoDB Atlas Account
@@ -72,6 +117,50 @@ Verify Installation
 ```bash
 ollama --version
 ```
+
+---
+
+## Ollama Configuration
+
+The Ollama connection differs depending on how you run the project.
+
+### Local Installation
+
+Use the default Ollama configuration.
+
+```python
+embeddings = OllamaEmbeddings(
+    model="nomic-embed-text"
+)
+
+llm = ChatOllama(
+    model="gemma3:4b",
+    temperature=0
+)
+```
+
+---
+
+### Docker Installation
+
+When running inside Docker, FastAPI communicates with the Ollama container through Docker's internal network.
+
+Use:
+
+```python
+embeddings = OllamaEmbeddings(
+    model="nomic-embed-text",
+    base_url="http://ollama:11434"
+)
+
+llm = ChatOllama(
+    model="gemma3:4b",
+    temperature=0,
+    base_url="http://ollama:11434"
+)
+```
+
+> **Important:** `localhost` refers to the current container. Therefore, Docker containers must communicate using the service name (`ollama`) instead of `localhost`.
 
 ---
 
@@ -269,11 +358,7 @@ READY
 Make sure Ollama is running in the background, then start the server:
 
 ```bash
-<<<<<<< HEAD
 python -m uvicorn app:app --host 0.0.0.0 --port 8000
-=======
-python -m uvicorn app:app --port 8000
->>>>>>> ad3548eee4b79ce6b10f6b637c425c5a969589ca
 ```
 
 Open your browser and go to
@@ -313,6 +398,108 @@ Assistant: A foreigner granted permanent residence status, allowing indefinite s
 
 You: exit
 ```
+
+---
+
+# Docker Installation (Recommended)
+
+## Prerequisites
+
+- Docker Desktop
+- Docker Compose
+
+Verify installation:
+
+```bash
+docker --version
+docker compose version
+```
+
+---
+
+## Clone the Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+
+cd YOUR_REPO
+```
+
+---
+
+## Create the `.env` File
+
+```env
+MONGODB_URI=YOUR_MONGODB_CONNECTION_STRING
+
+DB_NAME=singapore_pr_chunks
+
+COLLECTION_NAME=chunked_data
+
+INDEX_NAME=vector_index
+```
+
+---
+
+## Build and Run
+
+```bash
+docker compose up --build
+```
+
+On the first run Docker will:
+
+- Download the Ollama Docker image.
+- Build the FastAPI image.
+- Build the Ollama initializer image.
+- Automatically download:
+  - `gemma3:4b`
+  - `nomic-embed-text`
+- Start the FastAPI application.
+
+No manual Ollama installation is required.
+
+---
+
+Open:
+
+```
+http://localhost:8000
+```
+
+---
+
+## Stop Containers
+
+```bash
+docker compose down
+```
+
+---
+
+## Start Again
+
+```bash
+docker compose up
+```
+
+The downloaded models are stored in a Docker volume, so they will **not** be downloaded again.
+
+---
+
+## Remove Everything
+
+```bash
+docker compose down -v
+```
+
+This removes:
+
+- Containers
+- Networks
+- Ollama models
+
+The next run will download the models again.
 
 ---
 
@@ -400,6 +587,32 @@ Then open **http://localhost:8000** in your browser.
 python rag.py
 ```
 
+## Docker
+
+Build and Run
+
+```bash
+docker compose up --build
+```
+
+Start Existing Containers
+
+```bash
+docker compose up
+```
+
+Stop Containers
+
+```bash
+docker compose down
+```
+
+Remove Containers and Models
+
+```bash
+docker compose down -v
+```
+
 ---
 
 # Future Improvements
@@ -436,4 +649,3 @@ If you found this project useful, please consider giving this repository a **⭐
 # 📜 License
 
 This project is developed for educational and learning purposes.
-
