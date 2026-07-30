@@ -140,10 +140,10 @@ mongodb+srv://username:password@cluster.mongodb.net/?retryWrites=true&w=majority
 
 ---
 
-# Step 6 - Create key_param.py
+# Step 6 - Create .env file
 
 ```python
-MONGODB_URI = "YOUR_MONGODB_CONNECTION_STRING"
+MONGODB_URI = YOUR_MONGODB_CONNECTION_STRING
 ```
 
 ---
