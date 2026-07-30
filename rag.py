@@ -2,7 +2,8 @@ from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_ollama import OllamaEmbeddings, ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import HumanMessage, AIMessage
-import key_param
+from dotenv import load_dotenv
+import os
 
 # ==========================================
 # MongoDB Configuration
@@ -10,6 +11,8 @@ import key_param
 DB_NAME = "singapore_pr_chunks"
 COLLECTION_NAME = "chunked_data"
 INDEX_NAME = "vector_index"
+load_dotenv()
+MONGODB_URI = os.getenv("MONGODB_URI")
 
 # ==========================================
 # Embedding Model
@@ -22,7 +25,7 @@ embeddings = OllamaEmbeddings(
 # MongoDB Vector Store
 # ==========================================
 vector_store = MongoDBAtlasVectorSearch.from_connection_string(
-    connection_string=key_param.MONGODB_URI,
+    connection_string=MONGODB_URI,
     namespace=f"{DB_NAME}.{COLLECTION_NAME}",
     embedding=embeddings,
     index_name=INDEX_NAME,
