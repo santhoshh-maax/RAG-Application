@@ -20,11 +20,15 @@ if static_path.exists():
     app.mount("/static", StaticFiles(directory=str(static_path)), name="static")
 load_dotenv()
 MONGODB_URI = os.getenv("MONGODB_URI")
-DB_NAME = "singapore_pr_chunks"
-COLLECTION_NAME = "chunked_data"
-INDEX_NAME = "vector_index"
+DB_NAME = os.getenv("DB_NAME")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME")
+INDEX_NAME = os.getenv("INDEX_NAME")
 
-embeddings = OllamaEmbeddings(model="nomic-embed-text")
+# embeddings = OllamaEmbeddings(model="nomic-embed-text")
+embeddings = OllamaEmbeddings(
+    model="nomic-embed-text",
+    base_url="http://ollama:11434"
+)
 
 vector_store = MongoDBAtlasVectorSearch.from_connection_string(
     connection_string=MONGODB_URI,
@@ -33,7 +37,12 @@ vector_store = MongoDBAtlasVectorSearch.from_connection_string(
     index_name=INDEX_NAME,
 )
 
-llm = ChatOllama(model="gemma3:4b", temperature=0)
+# llm = ChatOllama(model="gemma3:4b", temperature=0)
+llm = ChatOllama(
+    model="gemma3:4b",
+    temperature=0,
+    base_url="http://ollama:11434"
+)
 
 prompt = ChatPromptTemplate.from_template("""
 You are a helpful AI assistant.

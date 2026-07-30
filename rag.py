@@ -8,11 +8,11 @@ import os
 # ==========================================
 # MongoDB Configuration
 # ==========================================
-DB_NAME = "singapore_pr_chunks"
-COLLECTION_NAME = "chunked_data"
-INDEX_NAME = "vector_index"
 load_dotenv()
 MONGODB_URI = os.getenv("MONGODB_URI")
+DB_NAME = os.getenv("DB_NAME")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME")
+INDEX_NAME = os.getenv("INDEX_NAME")
 
 # ==========================================
 # Embedding Model

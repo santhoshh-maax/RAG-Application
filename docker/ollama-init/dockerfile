@@ -1,0 +1,11 @@
+FROM ollama/ollama:latest
+
+RUN apt-get update && \
+    apt-get install -y curl jq && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY scripts/init-ollama.sh /init-ollama.sh
+
+RUN chmod +x /init-ollama.sh
+
+ENTRYPOINT ["/init-ollama.sh"]
