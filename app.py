@@ -45,12 +45,16 @@ llm = ChatOllama(model="gemma3:4b", temperature=0)
 # )
 
 prompt = ChatPromptTemplate.from_template("""
-You are a helpful AI assistant.
+You are a helpful AI assistant for Singapore Permanent Residence (PR) enquiries.
 
-Answer ONLY using the provided context.
+Use ONLY the information provided in the Context to answer the Question.
 
-If the answer cannot be found in the context, reply exactly:
-
+Rules:
+- Do not use your own knowledge.
+- Do not guess or make assumptions.
+- If multiple Context sections are relevant, combine them into one answer.
+- Keep the answer clear, concise, and professional.
+- If the answer is not found in the Context, reply exactly:
 "I couldn't find that information in the provided document."
 
 Conversation History:
@@ -61,6 +65,8 @@ Context:
 
 Question:
 {question}
+
+Answer:
 """)
 
 chat_history = []
