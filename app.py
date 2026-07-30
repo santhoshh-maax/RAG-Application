@@ -1,4 +1,6 @@
 import json
+from dotenv import load_dotenv
+import os
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, StreamingResponse
@@ -9,14 +11,15 @@ from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_ollama import OllamaEmbeddings, ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import HumanMessage, AIMessage
-import key_param
+
 
 app = FastAPI(title="RAG Chatbot")
 
 static_path = Path(__file__).parent / "static"
 if static_path.exists():
     app.mount("/static", StaticFiles(directory=str(static_path)), name="static")
-
+load_dotenv()
+MONGODB_URI = os.getenv("MONGODB_URI")
 DB_NAME = "singapore_pr_chunks"
 COLLECTION_NAME = "chunked_data"
 INDEX_NAME = "vector_index"
@@ -24,7 +27,7 @@ INDEX_NAME = "vector_index"
 embeddings = OllamaEmbeddings(model="nomic-embed-text")
 
 vector_store = MongoDBAtlasVectorSearch.from_connection_string(
-    connection_string=key_param.MONGODB_URI,
+    connection_string=MONGODB_URI,
     namespace=f"{DB_NAME}.{COLLECTION_NAME}",
     embedding=embeddings,
     index_name=INDEX_NAME,
