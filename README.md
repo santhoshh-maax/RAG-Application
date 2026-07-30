@@ -39,7 +39,7 @@ RAG Application/
 ├── app.py                  # FastAPI web server (API + frontend)
 ├── rag.py                  # Original CLI chatbot
 ├── load_data.py            # PDF ingestion script
-├── key_param.py            # MongoDB connection string
+├── .env                    # MongoDB connection string
 ├── requirements.txt        # Python dependencies
 │
 ├── static/
