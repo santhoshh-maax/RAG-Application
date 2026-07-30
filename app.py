@@ -24,11 +24,11 @@ DB_NAME = os.getenv("DB_NAME")
 COLLECTION_NAME = os.getenv("COLLECTION_NAME")
 INDEX_NAME = os.getenv("INDEX_NAME")
 
-# embeddings = OllamaEmbeddings(model="nomic-embed-text")
-embeddings = OllamaEmbeddings(
-    model="nomic-embed-text",
-    base_url="http://ollama:11434"
-)
+embeddings = OllamaEmbeddings(model="nomic-embed-text")
+# embeddings = OllamaEmbeddings(
+#     model="nomic-embed-text",
+#     base_url="http://ollama:11434"
+# )
 
 vector_store = MongoDBAtlasVectorSearch.from_connection_string(
     connection_string=MONGODB_URI,
@@ -37,12 +37,12 @@ vector_store = MongoDBAtlasVectorSearch.from_connection_string(
     index_name=INDEX_NAME,
 )
 
-# llm = ChatOllama(model="gemma3:4b", temperature=0)
-llm = ChatOllama(
-    model="gemma3:4b",
-    temperature=0,
-    base_url="http://ollama:11434"
-)
+llm = ChatOllama(model="gemma3:4b", temperature=0)
+# llm = ChatOllama(
+#     model="gemma3:4b",
+#     temperature=0,
+#     base_url="http://ollama:11434"
+# )
 
 prompt = ChatPromptTemplate.from_template("""
 You are a helpful AI assistant.
