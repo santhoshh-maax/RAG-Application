@@ -1,4 +1,4 @@
-# RAG Chatbot using MongoDB Atlas, Ollama, LangChain, and FastAPI
+# RAG Chatbot using MongoDB Atlas, Ollama, LangChain, and FastAPI  [![Sponsor](https://img.shields.io/badge/Sponsor-GitHub-db61a2?style=flat&logo=github-sponsors)](https://github.com/sponsors/santhoshh-maax) [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N51YFMS9)
 
 A Retrieval-Augmented Generation (RAG) chatbot built using **MongoDB Atlas Vector Search**, **Ollama**, **Gemma 3**, **LangChain**, and **FastAPI**. The application retrieves relevant information from a vector database and generates context-aware responses using a locally hosted Large Language Model (LLM).
 
@@ -39,7 +39,7 @@ RAG Application/
 ├── app.py                  # FastAPI web server (API + frontend)
 ├── rag.py                  # Original CLI chatbot
 ├── load_data.py            # PDF ingestion script
-├── key_param.py            # MongoDB connection string
+├── .env                    # MongoDB connection string
 ├── requirements.txt        # Python dependencies
 │
 ├── static/
@@ -140,10 +140,10 @@ mongodb+srv://username:password@cluster.mongodb.net/?retryWrites=true&w=majority
 
 ---
 
-# Step 6 - Create key_param.py
+# Step 6 - Create .env file
 
 ```python
-MONGODB_URI = "YOUR_MONGODB_CONNECTION_STRING"
+MONGODB_URI = YOUR_MONGODB_CONNECTION_STRING
 ```
 
 ---
@@ -415,11 +415,25 @@ python rag.py
 
 ---
 
-# Author
+# 👨‍💻 Author
 
 **Santhosh P**
 
-- Robotics
-- Artificial Intelligence
-- IoT
-- Computer Vision
+B.E. Computer Science and Engineering
+
+Mount Zion College of Engineering and Technology
+
+👉 **[Sponsor me on GitHub](https://github.com/sponsors/santhoshh-maax)**
+
+---
+
+# ⭐ Support
+
+If you found this project useful, please consider giving this repository a **⭐ Star**.
+
+---
+
+# 📜 License
+
+This project is developed for educational and learning purposes.
+
