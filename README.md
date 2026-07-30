@@ -1,4 +1,4 @@
-# RAG Chatbot using MongoDB Atlas, Ollama, LangChain, and FastAPI
+# RAG Chatbot using MongoDB Atlas, Ollama, LangChain, and FastAPI  [![Sponsor](https://img.shields.io/badge/Sponsor-GitHub-db61a2?style=flat&logo=github-sponsors)](https://github.com/sponsors/santhoshh-maax) [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N51YFMS9)
 
 A Retrieval-Augmented Generation (RAG) chatbot built using **MongoDB Atlas Vector Search**, **Ollama**, **Gemma 3**, **LangChain**, and **FastAPI**. The application retrieves relevant information from a vector database and generates context-aware responses using a locally hosted Large Language Model (LLM).
 
