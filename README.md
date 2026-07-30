@@ -415,11 +415,25 @@ python rag.py
 
 ---
 
-# Author
+# 👨‍💻 Author
 
 **Santhosh P**
 
-- Robotics
-- Artificial Intelligence
-- IoT
-- Computer Vision
+B.E. Computer Science and Engineering
+
+Mount Zion College of Engineering and Technology
+
+👉 **[Sponsor me on GitHub](https://github.com/sponsors/santhoshh-maax)**
+
+---
+
+# ⭐ Support
+
+If you found this project useful, please consider giving this repository a **⭐ Star**.
+
+---
+
+# 📜 License
+
+This project is developed for educational and learning purposes.
+
