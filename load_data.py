@@ -4,15 +4,17 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_ollama import OllamaEmbeddings
 from langchain_mongodb import MongoDBAtlasVectorSearch
 
-import key_param
+from dotenv import load_dotenv
+import os
 
 # ==========================
 # Connect to MongoDB Atlas
 # ==========================
-client = MongoClient(key_param.MONGODB_URI)
+load_dotenv()
+client = MongoClient(os.getenv("MONGODB_URI"))
 
-db_name = "singapore_pr_chunks"
-collection_name = "chunked_data"
+db_name = os.getenv("DB_NAME")
+collection_name = os.getenv("COLLECTION_NAME")
 
 db = client[db_name]
 collection = db[collection_name]
